@@ -14,10 +14,10 @@ export class TerminalView {
     this._stateModel = stateModel;
     this._themeModel = themeModel;
 
-    this._backdrop = DomUtils.$('.terminal-backdrop');
-    this._window = DomUtils.$('.terminal-window');
+    this._backdrop = DomUtils.$('#terminal-modal');
+    this._window = this._backdrop ? DomUtils.$('.terminal-window', this._backdrop) : null;
     this._closeBtn = DomUtils.$('#terminal-close-btn');
-    this._body = DomUtils.$('.terminal-body');
+    this._body = this._backdrop ? DomUtils.$('.terminal-body', this._backdrop) : null;
     this._input = DomUtils.$('#terminal-input');
 
     this._bindEvents();
@@ -86,16 +86,18 @@ export class TerminalView {
     if (!cmd) return;
     this._print(`> ${cmd}`, 'cmd');
 
-    const parts = cmd.toLowerCase().split(' ');
+    const parts = cmd.toLowerCase().split(/\s+/);
     const root = parts[0];
     const arg = parts[1];
+    const themeIds = this._themeModel.getThemes().map((t) => t.id);
 
     switch (root) {
       case 'help':
         this._print('Available Commands:', 'system');
         this._print('  help             - Show this cheat sheet');
         this._print('  text <words>     - Change displayed text (e.g. text CODING)');
-        this._print('  theme <name>     - Change theme (obsidian, cyber, ethereal, matrix)');
+        this._print('  theme <name>     - Change theme');
+        this._print(`                     (${themeIds.join(', ')})`);
         this._print('  morph / 3d       - Toggle 3D WebGL particle text morph');
         this._print('  particles / bg   - Toggle background ball particles');
         this._print('  export / save    - Download high-res PNG wallpaper');
@@ -119,18 +121,18 @@ export class TerminalView {
         const newCustomText = cmd.slice(root.length).trim();
         if (newCustomText.length > 0) {
           this._stateModel.setText(newCustomText);
-          this._print(`[OK] Text updated to: "${newCustomText}"`, 'system');
+          this._print(`[OK] Text updated to: "${newCustomText.slice(0, 24)}"`, 'system');
         } else {
           this._print('Error: Specify text, e.g.: text HELLO DEVELOPER', 'error');
         }
         break;
 
       case 'theme':
-        if (['obsidian', 'cyber', 'ethereal', 'matrix'].includes(arg)) {
+        if (themeIds.includes(arg)) {
           this._themeModel.setTheme(arg);
           this._print(`[OK] Theme switched to: ${arg.toUpperCase()}`, 'system');
         } else {
-          this._print('Error: Specify a valid theme: obsidian, cyber, ethereal, matrix', 'error');
+          this._print(`Error: Specify a valid theme: ${themeIds.join(', ')}`, 'error');
         }
         break;
 

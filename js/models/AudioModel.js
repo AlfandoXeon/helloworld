@@ -324,20 +324,31 @@ export class AudioModel {
    */
   stopAmbientDrone() {
     if (!this._droneGain || !this._ctx) return;
-    this._droneGain.gain.linearRampToValueAtTime(0.0001, this._ctx.currentTime + 0.5);
+
+    // Detach references right away so a quick re-unmute can start a fresh drone
+    const osc1 = this._droneOsc1;
+    const osc2 = this._droneOsc2;
+    const gain = this._droneGain;
+    this._droneOsc1 = null;
+    this._droneOsc2 = null;
+    this._droneGain = null;
+
+    const now = this._ctx.currentTime;
+    gain.gain.cancelScheduledValues(now);
+    gain.gain.setValueAtTime(Math.max(gain.gain.value, 0.0001), now);
+    gain.gain.linearRampToValueAtTime(0.0001, now + 0.5);
 
     setTimeout(() => {
       try {
-        if (this._droneOsc1) {
-          this._droneOsc1.stop();
-          this._droneOsc1.disconnect();
-          this._droneOsc1 = null;
+        if (osc1) {
+          osc1.stop();
+          osc1.disconnect();
         }
-        if (this._droneOsc2) {
-          this._droneOsc2.stop();
-          this._droneOsc2.disconnect();
-          this._droneOsc2 = null;
+        if (osc2) {
+          osc2.stop();
+          osc2.disconnect();
         }
+        gain.disconnect();
       } catch (e) {
         // ignored
       }

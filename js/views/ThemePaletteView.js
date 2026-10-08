@@ -33,7 +33,7 @@ export class ThemePaletteView {
     const current = this._themeModel.getCurrentTheme();
 
     themes.forEach((theme) => {
-      const btn = DomUtils.create('button', 'p-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 flex flex-col items-center gap-2 transition-all cursor-pointer group text-left w-full');
+      const btn = DomUtils.create('button', 'p-2 sm:p-2.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 flex flex-col items-center gap-1.5 sm:gap-2 transition-all cursor-pointer group text-left w-full');
       btn.dataset.themeId = theme.id;
 
       if (current.id === theme.id) {
@@ -60,7 +60,6 @@ export class ThemePaletteView {
       btn.addEventListener('click', () => {
         this._themeModel.setTheme(theme.id);
         this._themeModel.setModalOpen(false);
-        this._eventBus.emit('ui:click');
       });
 
       this._presetsGrid.appendChild(btn);
@@ -132,16 +131,16 @@ export class ThemePaletteView {
       this._hexInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           e.preventDefault();
-          this._applyHexInput();
-        } else if (e.key === 'Escape') {
-          e.preventDefault();
-          this._themeModel.setModalOpen(false);
+          this._applyHexInput(true);
         }
       });
     }
   }
 
-  _applyHexInput() {
+  /**
+   * @param {boolean} [fromKeyboard=false] Button clicks already get sound via event delegation
+   */
+  _applyHexInput(fromKeyboard = false) {
     if (!this._hexInput) return;
     let hex = this._hexInput.value.trim();
     if (!hex.startsWith('#')) hex = `#${hex}`;
@@ -149,7 +148,7 @@ export class ThemePaletteView {
     if (/^#[0-9A-Fa-f]{6}$/.test(hex)) {
       this._themeModel.setCustomColor(hex);
       this._themeModel.setModalOpen(false);
-      this._eventBus.emit('ui:click');
+      if (fromKeyboard) this._eventBus.emit('ui:click');
     }
   }
 

@@ -88,13 +88,13 @@ export class HudView {
 
     // Sound Mute State Changed
     this._eventBus.on('audio:muteChanged', (isMuted) => {
-      if (this._soundBtn && this._eqContainer) {
+      if (this._soundBtn) {
         if (!isMuted) {
           this._soundBtn.classList.add('active');
-          this._eqContainer.classList.add('playing');
+          if (this._eqContainer) this._eqContainer.classList.add('playing');
         } else {
           this._soundBtn.classList.remove('active');
-          this._eqContainer.classList.remove('playing');
+          if (this._eqContainer) this._eqContainer.classList.remove('playing');
         }
       }
     });

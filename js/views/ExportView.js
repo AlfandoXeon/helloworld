@@ -69,11 +69,11 @@ export class ExportView {
         throw new Error('html2canvas library is not loaded');
       }
 
-      const activeTheme = this._themeModel.getCurrentTheme();
       const scaleFactor = Math.max(window.devicePixelRatio || 1, 2);
+      const themeBg = getComputedStyle(document.body).backgroundColor || '#070709';
 
       const canvas = await window.html2canvas(document.body, {
-        backgroundColor: activeTheme?.bg || '#070709',
+        backgroundColor: themeBg,
         scale: scaleFactor,
         useCORS: true,
         allowTaint: true,

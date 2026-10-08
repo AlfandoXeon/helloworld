@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <meta name="theme-color" content="#070709">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Hello, World! — The Genesis of Code</title>
   <meta name="description" content="An award-winning, kinetic GSAP showcase honoring the timeless invocation: Hello, World!">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='2'><polyline points='4 17 10 11 4 5'/><line x1='12' y1='19' x2='20' y2='19'/></svg>">
@@ -66,7 +70,7 @@
   <!-- =========================================================================
        4. MAIN HERO SCENE: "HELLO, WORLD!"
        ========================================================================= -->
-  <main class="relative z-10 w-screen h-screen flex flex-col items-center justify-center px-4 text-center">
+  <main class="relative z-10 w-full min-h-[100dvh] h-[100dvh] flex flex-col items-center justify-center px-4 sm:px-6 text-center overflow-hidden">
     
     <!-- 3D Kinetic Typography Container -->
     <div class="hero-title-wrapper my-2">
@@ -74,8 +78,9 @@
     </div>
 
     <!-- Interactive Gestures Cue -->
-    <div class="mt-8 flex items-center justify-center gap-2 text-[11px] font-mono tracking-widest text-slate-500 uppercase">
-      <span>[ Hover letters to bend • Click 3D Morph to assemble ]</span>
+    <div class="mt-6 sm:mt-8 flex items-center justify-center gap-2 text-[10px] sm:text-[11px] font-mono tracking-widest text-slate-500 uppercase px-4">
+      <span class="hidden sm:inline">[ Hover letters to bend • Click 3D Morph to assemble ]</span>
+      <span class="inline sm:hidden">[ Tap letters to bend • Swipe dock below ]</span>
     </div>
 
   </main>
@@ -83,63 +88,52 @@
   <!-- =========================================================================
        5. BOTTOM FLOATING HUD DOCK
        ========================================================================= -->
-  <footer class="fixed bottom-6 left-0 right-0 z-40 flex justify-center px-4 pointer-events-none">
-    <nav class="hud-glass-panel pointer-events-auto px-4 py-2.5 rounded-full flex items-center gap-2 md:gap-3">
+  <footer class="fixed bottom-3 sm:bottom-6 left-0 right-0 z-40 flex justify-center px-2 sm:px-4 pointer-events-none w-full">
+    <nav class="hud-glass-panel hud-dock-scroll pointer-events-auto px-3 sm:px-4 py-2 sm:py-2.5 rounded-full flex items-center gap-1.5 sm:gap-2.5 max-w-[calc(100vw-1rem)] sm:max-w-max overflow-x-auto">
       
       <!-- Sound FX Toggle -->
       <button id="hud-sound-btn" class="hud-pill-btn" aria-label="Toggle Audio Synthesizer" title="Toggle Sound (Press M)">
-        <div class="audio-equalizer" aria-hidden="true">
-          <div class="equalizer-bar"></div>
-          <div class="equalizer-bar"></div>
-          <div class="equalizer-bar"></div>
-        </div>
-        <span class="hidden sm:inline">AUDIO</span>
+        <span>AUDIO</span>
       </button>
 
       <!-- Theme Switcher -->
       <button id="hud-theme-btn" class="hud-pill-btn" aria-label="Cycle Visual Theme" title="Cycle Theme (Press T)">
-        <i data-lucide="palette" class="w-3.5 h-3.5 text-amber-400"></i>
-        <span id="hud-theme-label" class="hidden sm:inline">Obsidian</span>
+        <span class="text-slate-400">THEME:</span>
+        <span id="hud-theme-label" class="text-amber-400 font-medium">Obsidian</span>
       </button>
 
       <!-- Custom Text Button -->
       <button id="hud-edit-btn" class="hud-pill-btn" aria-label="Edit Custom Text" title="Edit Text (Press E)">
-        <i data-lucide="type" class="w-3.5 h-3.5 text-blue-400"></i>
         <span>EDIT TEXT</span>
       </button>
 
       <!-- 3D WebGL Morph Button -->
       <button id="hud-morph-btn" class="hud-pill-btn" aria-label="Toggle 3D WebGL Particle Text" title="Toggle 3D Morph (Press 3)">
-        <i data-lucide="box" class="w-3.5 h-3.5 text-purple-400"></i>
         <span>3D MORPH</span>
       </button>
 
       <!-- Toggle Background Particles Button -->
       <button id="hud-particles-btn" class="hud-pill-btn active" aria-label="Toggle Background Particles" title="Toggle Background Particles (Press P)">
-        <i data-lucide="sparkle" class="w-3.5 h-3.5 text-yellow-300"></i>
         <span>PARTICLES</span>
       </button>
 
       <!-- Export / Save Design PNG Button -->
       <button id="hud-export-btn" class="hud-pill-btn" aria-label="Export Design as PNG" title="Save Design as PNG (Press S)">
-        <i data-lucide="download" class="w-3.5 h-3.5 text-emerald-400"></i>
         <span>EXPORT</span>
       </button>
 
       <!-- Zero-G Gravity Toggle -->
       <button id="hud-gravity-btn" class="hud-pill-btn" aria-label="Toggle Zero-G Physics" title="Toggle Zero Gravity (Press G)">
-        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-cyan-400"></i>
         <span>ZERO-G</span>
       </button>
 
       <!-- Cyber Terminal Modal Trigger -->
       <button id="hud-terminal-btn" class="hud-pill-btn" aria-label="Open Cyber Terminal" title="Open Console (Press ~)">
-        <i data-lucide="terminal-square" class="w-3.5 h-3.5 text-emerald-400"></i>
-        <span class="hidden sm:inline">CLI</span>
+        <span>CLI</span>
       </button>
 
       <!-- Live FPS Meter Badge -->
-      <div id="hud-fps-counter" class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 font-mono text-[11px] text-slate-400">
+      <div id="hud-fps-counter" class="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 font-mono text-[10px] sm:text-[11px] text-slate-400 flex-shrink-0">
         60 FPS
       </div>
 
@@ -186,7 +180,7 @@
        7. INTERACTIVE CUSTOM TEXT MODAL
        ========================================================================= -->
   <div id="custom-text-modal" class="terminal-backdrop" role="dialog" aria-modal="true" aria-label="Custom Text Input">
-    <div class="hud-glass-panel p-6 rounded-2xl max-w-md w-full mx-4 shadow-2xl flex flex-col gap-4 border border-white/10">
+    <div class="hud-glass-panel p-4 sm:p-6 rounded-2xl max-w-md w-full mx-2 sm:mx-4 shadow-2xl flex flex-col gap-3 sm:gap-4 border border-white/10 max-h-[90dvh] overflow-y-auto">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
           <i data-lucide="type" class="w-4 h-4 text-amber-400"></i>
@@ -214,7 +208,7 @@
        8. INTERACTIVE COLOR STUDIO / THEME PALETTE MODAL
        ========================================================================= -->
   <div id="theme-palette-modal" class="terminal-backdrop" role="dialog" aria-modal="true" aria-label="Color Studio & Theme Palettes">
-    <div class="hud-glass-panel p-6 rounded-2xl max-w-lg w-full mx-4 shadow-2xl flex flex-col gap-5 border border-white/10">
+    <div class="hud-glass-panel p-4 sm:p-6 rounded-2xl max-w-lg w-full mx-2 sm:mx-4 shadow-2xl flex flex-col gap-4 sm:gap-5 border border-white/10 max-h-[90dvh] overflow-y-auto">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-2">
           <i data-lucide="palette" class="w-4 h-4 text-amber-400"></i>
@@ -257,7 +251,7 @@
   <div id="export-flash-overlay" class="fixed inset-0 pointer-events-none z-[9999] opacity-0 bg-white" style="transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);"></div>
 
   <!-- High-Res Wallpaper Export Notification Toast -->
-  <div id="export-toast" class="fixed top-8 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 -translate-y-4 flex items-center gap-3 px-5 py-2.5 rounded-full bg-black/85 backdrop-blur-md border border-white/15 text-xs font-mono text-white shadow-2xl">
+  <div id="export-toast" class="fixed top-4 sm:top-8 left-1/2 -translate-x-1/2 z-50 pointer-events-none opacity-0 -translate-y-4 flex items-center gap-2 sm:gap-3 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full bg-black/85 backdrop-blur-md border border-white/15 text-[11px] sm:text-xs font-mono text-white shadow-2xl max-w-[90vw] text-center">
     <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
     <span id="export-toast-msg">SNAPSHOT CAPTURED // 3840×2160 (4K)</span>
   </div>

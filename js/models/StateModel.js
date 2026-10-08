@@ -18,13 +18,10 @@ export class StateModel {
         vx: 0,
         vy: 0,
         isDown: false,
-        isHovering: false
+        isHovering: false,
+        isActive: false // true while a mouse is inside the window or a finger is touching
       },
-      viewport: {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        dpr: Math.min(window.devicePixelRatio || 1, 2)
-      },
+      viewport: StateModel._computeViewport(window.innerWidth, window.innerHeight),
       isZeroG: false,
       is3DMorph: false,
       isBgParticlesVisible: true,
@@ -108,11 +105,34 @@ export class StateModel {
     }
   }
 
+  setPointerActive(isActive) {
+    if (this._state.mouse.isActive !== isActive) {
+      this._state.mouse.isActive = isActive;
+      this._eventBus.emit('pointer:activeChanged', isActive);
+    }
+  }
+
   setViewport(width, height) {
-    this._state.viewport.width = width;
-    this._state.viewport.height = height;
-    this._state.viewport.dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this._state.viewport = StateModel._computeViewport(width, height);
     this._eventBus.emit('viewport:resized', this._state.viewport);
+  }
+
+  /**
+   * Derive viewport metrics and responsive breakpoint flags
+   * @param {number} width
+   * @param {number} height
+   */
+  static _computeViewport(width, height) {
+    return {
+      width,
+      height,
+      dpr: Math.min(window.devicePixelRatio || 1, 2),
+      aspect: width / Math.max(height, 1),
+      isMobile: width < 640,
+      isTablet: width >= 640 && width < 1100,
+      isPortrait: height >= width,
+      isShortLandscape: height < 520 && width > height
+    };
   }
 
   toggleZeroG() {

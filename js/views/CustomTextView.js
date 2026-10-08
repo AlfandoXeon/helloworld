@@ -72,10 +72,7 @@ export class CustomTextView {
       this._input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
           e.preventDefault();
-          this._applyText();
-        } else if (e.key === 'Escape') {
-          e.preventDefault();
-          this._stateModel.setCustomTextModalOpen(false);
+          this._applyText(true);
         }
       });
     }
@@ -94,13 +91,16 @@ export class CustomTextView {
     this._counter.textContent = `${len}/24`;
   }
 
-  _applyText() {
+  /**
+   * @param {boolean} [fromKeyboard=false] Button clicks already get sound via event delegation
+   */
+  _applyText(fromKeyboard = false) {
     if (!this._input) return;
     const val = this._input.value.trim();
     if (val.length === 0) return;
 
     this._stateModel.setText(val);
     this._stateModel.setCustomTextModalOpen(false);
-    this._eventBus.emit('ui:click'); // trigger sound feedback
+    if (fromKeyboard) this._eventBus.emit('ui:click'); // trigger sound feedback
   }
 }

@@ -14,6 +14,7 @@ import { ThemePaletteView } from '../views/ThemePaletteView.js';
 import { ExportView } from '../views/ExportView.js';
 import { InteractionController } from './InteractionController.js';
 import { AudioController } from './AudioController.js';
+import { ViewportController } from './ViewportController.js';
 
 /**
  * AppController - Master Lifecycle Orchestrator
@@ -42,6 +43,7 @@ export class AppController {
     // Controllers
     this._interactionController = new InteractionController(this._eventBus, this._stateModel);
     this._audioController = new AudioController(this._eventBus, this._audioModel);
+    this._viewportController = new ViewportController(this._eventBus, this._stateModel);
 
     // Performance metrics
     this._lastFrameTime = performance.now();
@@ -61,6 +63,9 @@ export class AppController {
     this._interactionController.init();
     this._audioController.init();
 
+    // Measure layout (dock, safe areas, keyboard) and broadcast viewport
+    this._viewportController.init();
+
     // Start preloader sequence
     this._preloaderView.start();
 
@@ -69,6 +74,13 @@ export class AppController {
   }
 
   _bindCoreEvents() {
+    // Escape: close whichever modal is open (terminal, custom text, color studio)
+    this._eventBus.on('ui:escape', () => {
+      if (this._stateModel.isTerminalOpen) this._stateModel.setTerminalOpen(false);
+      if (this._stateModel.isCustomTextOpen) this._stateModel.setCustomTextModalOpen(false);
+      if (this._themeModel.isModalOpen) this._themeModel.setModalOpen(false);
+    });
+
     // Theme cycle / palette actions
     this._eventBus.on('ui:themeCycle', () => {
       this._themeModel.cycleTheme();

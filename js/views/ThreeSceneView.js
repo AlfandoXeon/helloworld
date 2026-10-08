@@ -55,8 +55,9 @@ export class ThreeSceneView {
     this._scene.fog = new THREE.FogExp2(currentTheme.fogColor || 0x070709, 0.001);
 
     // Camera
-    this._camera = new THREE.PerspectiveCamera(55, width / height, 1, 3000);
-    this._camera.position.z = 520;
+    const aspect = width / height;
+    this._camera = new THREE.PerspectiveCamera(55, aspect, 1, 3000);
+    this._camera.position.z = aspect < 0.65 ? 880 : (aspect < 0.95 ? 700 : 520);
 
     // Renderer
     this._renderer = new THREE.WebGLRenderer({
@@ -253,7 +254,9 @@ export class ThreeSceneView {
     this._eventBus.on('viewport:resized', () => {
       if (!this._renderer || !this._camera) return;
       const { width, height, dpr } = this._stateModel.viewport;
-      this._camera.aspect = width / height;
+      const aspect = width / height;
+      this._camera.aspect = aspect;
+      this._camera.position.z = aspect < 0.65 ? 880 : (aspect < 0.95 ? 700 : 520);
       this._camera.updateProjectionMatrix();
       this._renderer.setSize(width, height);
       this._renderer.setPixelRatio(dpr);

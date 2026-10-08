@@ -175,21 +175,39 @@
               inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
+.hud-dock-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+}
+
+.hud-dock-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 .hud-pill-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.95rem;
   border-radius: 9999px;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  letter-spacing: 0.08em;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border-glass);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   user-select: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .hud-pill-btn:hover {
@@ -205,6 +223,28 @@
   border-color: var(--accent-primary);
   background: rgba(255, 255, 255, 0.12);
   box-shadow: 0 0 15px var(--accent-glow);
+}
+
+@media (max-width: 768px) {
+  .hud-pill-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.7rem;
+    gap: 0.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hud-pill-btn {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+  }
+}
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  footer.fixed {
+    bottom: max(0.75rem, env(safe-area-inset-bottom, 0.75rem));
+  }
 }
 
 /* Equalizer Bars for Audio Button */
@@ -251,10 +291,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 1rem;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (min-width: 640px) {
+  .terminal-backdrop {
+    padding: 1.5rem;
+  }
 }
 
 .terminal-backdrop.open {
@@ -266,6 +312,7 @@
   width: 100%;
   max-width: 680px;
   height: 480px;
+  max-height: calc(100dvh - 2.5rem);
   background: rgba(10, 11, 16, 0.95);
   border: 1px solid var(--accent-primary);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8),

@@ -47,6 +47,17 @@ export class CursorView {
         this._ring.classList.remove('is-clicking');
       }
     });
+
+    // Hide custom cursor until the mouse enters, and when it leaves the window
+    this._eventBus.on('pointer:activeChanged', (isActive) => {
+      document.documentElement.classList.toggle('cursor-visible', isActive);
+      if (isActive && !this._isInitialized) {
+        // Snap ring to the first known position instead of flying in from the center
+        this._pos.x = this._stateModel.mouse.targetX;
+        this._pos.y = this._stateModel.mouse.targetY;
+        this._isInitialized = true;
+      }
+    });
   }
 
   /**
@@ -57,9 +68,9 @@ export class CursorView {
     this._pos.targetX = mouse.targetX;
     this._pos.targetY = mouse.targetY;
 
-    // Instant dot movement for responsiveness
+    // Instant dot movement for responsiveness (centered on the pointer)
     if (this._dot) {
-      this._dot.style.transform = `translate3d(${this._pos.targetX}px, ${this._pos.targetY}px, 0)`;
+      this._dot.style.transform = `translate3d(${this._pos.targetX}px, ${this._pos.targetY}px, 0) translate(-50%, -50%)`;
     }
 
     // Smooth lerp for outer ring
@@ -75,12 +86,14 @@ export class CursorView {
     const speed = Math.hypot(this._velocity.x, this._velocity.y);
     const angle = Math.atan2(this._velocity.y, this._velocity.x) * (180 / Math.PI);
     const stretch = Math.min(speed * 0.02, 0.4);
+    const press = mouse.isDown ? 0.75 : 1;
 
     if (this._ring) {
+      const base = `translate3d(${this._pos.x}px, ${this._pos.y}px, 0) translate(-50%, -50%)`;
       if (!this._ring.classList.contains('is-hovering')) {
-        this._ring.style.transform = `translate3d(${this._pos.x}px, ${this._pos.y}px, 0) rotate(${angle}deg) scale(${1 + stretch}, ${1 - stretch * 0.5})`;
+        this._ring.style.transform = `${base} rotate(${angle}deg) scale(${(1 + stretch) * press}, ${(1 - stretch * 0.5) * press})`;
       } else {
-        this._ring.style.transform = `translate3d(${this._pos.x}px, ${this._pos.y}px, 0)`;
+        this._ring.style.transform = `${base} scale(${press})`;
       }
     }
   }

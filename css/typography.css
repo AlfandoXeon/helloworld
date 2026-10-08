@@ -12,9 +12,9 @@
 .hero-title {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: clamp(3rem, 10vw, 10.5rem);
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  font-size: clamp(2rem, 9.5vw, 9.5rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
   color: var(--text-primary);
   user-select: none;
@@ -24,8 +24,33 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 0.1em 0.35em;
+  gap: 0.1em 0.3em;
   text-align: center;
+  max-width: 100%;
+}
+
+.hero-title.hero-title-medium {
+  font-size: clamp(1.6rem, 7vw, 7rem);
+}
+
+.hero-title.hero-title-long {
+  font-size: clamp(1.3rem, 5.5vw, 5.2rem);
+}
+
+@media (max-width: 640px) {
+  .hero-title {
+    font-size: clamp(1.85rem, 8.5vw, 3.25rem);
+    line-height: 1.08;
+    gap: 0.1em 0.22em;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero-title {
+    font-size: clamp(1.5rem, 8vw, 2.4rem);
+    line-height: 1.1;
+    gap: 0.08em 0.18em;
+  }
 }
 
 /* Individual Split Characters */
