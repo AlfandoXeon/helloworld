@@ -1,0 +1,101 @@
+/* ==========================================================================
+   TYPOGRAPHY - KINETIC DISPLAY & RESPONSIVE CLAMPS
+   ========================================================================== */
+
+/* Kinetic Hero Title */
+.hero-title-wrapper {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(3rem, 10vw, 10.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  user-select: none;
+  transform-style: preserve-3d;
+  transition: text-shadow 0.5s ease;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.1em 0.35em;
+  text-align: center;
+}
+
+/* Individual Split Characters */
+.hero-title .char {
+  display: inline-block;
+  position: relative;
+  will-change: transform, opacity, filter;
+  transform-origin: 50% 100%;
+  cursor: pointer;
+  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              text-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-title .char:hover {
+  color: #ffffff;
+  text-shadow: 0 0 25px var(--accent-glow), 0 0 50px var(--accent-primary);
+}
+
+.hero-title .word {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* Accent Word Styling - Fixed: removed parent -webkit-background-clip: text to prevent transformed children collapsing */
+.hero-title .word-accent {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  color: var(--accent-primary);
+  filter: drop-shadow(0 0 35px var(--accent-glow));
+}
+
+.hero-title .word-accent .char {
+  color: var(--accent-primary);
+  text-shadow: 0 0 25px var(--accent-glow), 0 0 50px var(--accent-primary);
+}
+
+.hero-title .word-accent .char:hover {
+  color: #ffffff;
+  text-shadow: 0 0 35px var(--accent-glow), 0 0 65px var(--accent-secondary);
+}
+
+/* Glowing Period / Exclamation Mark */
+.hero-punctuation {
+  color: var(--accent-primary) !important;
+  text-shadow: 0 0 30px var(--accent-glow), 0 0 60px var(--accent-primary);
+  display: inline-block;
+}
+
+/* Meta & Badge Typography */
+.meta-tag {
+  font-family: var(--font-mono);
+  font-size: clamp(0.7rem, 1.2vw, 0.85rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.meta-number {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-feature-settings: "tnum" 1, "zero" 1;
+}
+
+.subtitle-lead {
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.8vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 48ch;
+}

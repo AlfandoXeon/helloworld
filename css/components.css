@@ -1,0 +1,348 @@
+/* ==========================================================================
+   COMPONENTS - PRELOADER, CURSOR, HUD, TERMINAL & NOISE OVERLAY
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Noise Overlay & Background Grid
+   -------------------------------------------------------------------------- */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 998;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.ambient-grid {
+  position: fixed;
+  inset: 0;
+  background-size: 60px 60px;
+  background-image: 
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+#canvas-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   2. Custom Fluid Magnetic Cursor
+   -------------------------------------------------------------------------- */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: var(--cursor-dot);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease, background-color 0.4s ease;
+  will-change: transform;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 44px;
+  height: 44px;
+  border: 1.5px solid var(--cursor-ring);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s var(--ease-out-expo),
+              height 0.3s var(--ease-out-expo),
+              border-color 0.4s ease,
+              background-color 0.3s ease;
+  will-change: transform;
+}
+
+.cursor-ring.is-hovering {
+  width: 72px;
+  height: 72px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent-primary);
+  backdrop-filter: blur(2px);
+}
+
+.cursor-ring.is-clicking {
+  transform: translate(-50%, -50%) scale(0.75);
+}
+
+@media (pointer: coarse), (max-width: 768px) {
+  .cursor-dot, .cursor-ring {
+    display: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. Cinematic Preloader & Shutters
+   -------------------------------------------------------------------------- */
+.preloader-shutter-top,
+.preloader-shutter-bottom {
+  position: fixed;
+  left: 0;
+  width: 100vw;
+  height: 50.5vh;
+  background-color: #050507;
+  z-index: 9990;
+  will-change: transform;
+}
+
+.preloader-shutter-top {
+  top: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.preloader-shutter-bottom {
+  bottom: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.preloader-content {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9995;
+  pointer-events: none;
+}
+
+.preloader-counter {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 15vw, 11rem);
+  font-weight: 900;
+  line-height: 1;
+  color: #ffffff;
+  font-feature-settings: "tnum" 1;
+  text-shadow: 0 0 40px var(--accent-glow);
+}
+
+.preloader-bar-track {
+  width: clamp(200px, 30vw, 360px);
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 99px;
+  overflow: hidden;
+  margin-top: 2rem;
+  position: relative;
+}
+
+.preloader-bar-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-secondary), var(--accent-primary));
+  box-shadow: 0 0 15px var(--accent-primary);
+  border-radius: 99px;
+  transition: width 0.05s linear;
+}
+
+.preloader-status {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: var(--text-secondary);
+  margin-top: 1.25rem;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   4. Floating HUD Dock & Glassmorphism
+   -------------------------------------------------------------------------- */
+.hud-glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.hud-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-glass);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.hud-pill-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--border-glass-hover);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 20px var(--accent-glow);
+  transform: translateY(-2px);
+}
+
+.hud-pill-btn.active {
+  color: var(--text-primary);
+  border-color: var(--accent-primary);
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* Equalizer Bars for Audio Button */
+.audio-equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.equalizer-bar {
+  width: 2px;
+  height: 3px;
+  background-color: currentColor;
+  border-radius: 1px;
+  transition: height 0.2s ease;
+}
+
+.audio-equalizer.playing .equalizer-bar:nth-child(1) {
+  animation: eqBounce 0.8s ease-in-out infinite alternate;
+}
+.audio-equalizer.playing .equalizer-bar:nth-child(2) {
+  animation: eqBounce 0.6s ease-in-out infinite alternate 0.2s;
+}
+.audio-equalizer.playing .equalizer-bar:nth-child(3) {
+  animation: eqBounce 0.9s ease-in-out infinite alternate 0.4s;
+}
+
+@keyframes eqBounce {
+  0% { height: 3px; }
+  100% { height: 12px; }
+}
+
+/* --------------------------------------------------------------------------
+   5. Interactive Cyber Terminal Modal
+   -------------------------------------------------------------------------- */
+.terminal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 4, 7, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9950;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.terminal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.terminal-window {
+  width: 100%;
+  max-width: 680px;
+  height: 480px;
+  background: rgba(10, 11, 16, 0.95);
+  border: 1px solid var(--accent-primary);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8),
+              0 0 40px var(--accent-glow);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: scale(0.95) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.terminal-backdrop.open .terminal-window {
+  transform: scale(1) translateY(0);
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.terminal-body {
+  flex: 1;
+  padding: 1.25rem;
+  overflow-y: auto;
+  font-family: var(--font-mono);
+  font-size: 0.825rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.terminal-body::-webkit-scrollbar {
+  width: 6px;
+}
+.terminal-body::-webkit-scrollbar-thumb {
+  background: var(--border-glass);
+  border-radius: 3px;
+}
+
+.terminal-prompt-line {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent-primary);
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.825rem;
+  caret-color: var(--accent-primary);
+}
+
+/* --------------------------------------------------------------------------
+   8. Clean Wallpaper Export Mask
+   -------------------------------------------------------------------------- */
+body.exporting-mode footer,
+body.exporting-mode .cursor-dot,
+body.exporting-mode .cursor-ring,
+body.exporting-mode .terminal-backdrop,
+body.exporting-mode #export-flash-overlay,
+body.exporting-mode #export-toast,
+body.exporting-mode .preloader-shutter-top,
+body.exporting-mode .preloader-shutter-bottom,
+body.exporting-mode .preloader-content {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}

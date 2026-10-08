@@ -1,0 +1,20 @@
+nama aplikasi = Hello world
+Paltform = HTML, JS, CSS JS => JS OOP & MVC => Static web
+design => GSAP
+
+jadi pada kesempatan kali ini, saya ingin membuat sebuah web GSAP ( static saja ) untuk menampilkan hello world yang elegan, responsive, dan pastinya bagus banget
+dengan MVC java script, dan OOP
+
+design: 
+saya ingin design ala ala gsap gitu
+dan menggunakan banyak UI modern..
+tapi, tanpa menggunakan paket dari npm / nodejs
+gunakan saja cdn semua
+
+
+untuk isi webnya:
+Hello, World!
+itu doang
+
+maka dari itu, tolong tekankan ke design nya
+

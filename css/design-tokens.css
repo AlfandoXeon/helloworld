@@ -1,0 +1,192 @@
+/* ==========================================================================
+   DESIGN TOKENS - CSS VARIABLES & THEMES
+   ========================================================================== */
+
+:root {
+  /* Default Theme: Obsidian Eclipse */
+  --bg-primary: #070709;
+  --bg-secondary: #0f0f14;
+  --bg-tertiary: #161620;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #475569;
+  --accent-primary: #f59e0b;
+  --accent-secondary: #06b6d4;
+  --accent-glow: rgba(245, 158, 11, 0.45);
+  --accent-glow-secondary: rgba(6, 182, 212, 0.35);
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-glass-hover: rgba(255, 255, 255, 0.2);
+  --glass-bg: rgba(15, 15, 20, 0.65);
+  --glass-blur: blur(20px);
+  --cursor-dot: #f59e0b;
+  --cursor-ring: rgba(245, 158, 11, 0.6);
+  --particle-color: 148, 163, 184;
+  --particle-color-secondary: 56, 189, 248;
+  --grid-line: rgba(255, 255, 255, 0.03);
+
+  /* Typography Scales */
+  --font-display: 'Syne', sans-serif;
+  --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Transitions */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
+  --theme-transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                      color 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                      border-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Theme: Cyber Neon */
+[data-theme="cyber"] {
+  --bg-primary: #080314;
+  --bg-secondary: #130924;
+  --bg-tertiary: #1e0e38;
+  --text-primary: #ffffff;
+  --text-secondary: #a78bfa;
+  --text-muted: #6d28d9;
+  --accent-primary: #ff007f;
+  --accent-secondary: #00f0ff;
+  --accent-glow: rgba(255, 0, 127, 0.5);
+  --accent-glow-secondary: rgba(0, 240, 255, 0.4);
+  --border-glass: rgba(255, 0, 127, 0.18);
+  --border-glass-hover: rgba(0, 240, 255, 0.35);
+  --glass-bg: rgba(19, 9, 36, 0.7);
+  --cursor-dot: #00f0ff;
+  --cursor-ring: rgba(255, 0, 127, 0.7);
+  --particle-color: 139, 92, 246;
+  --particle-color-secondary: 56, 189, 248;
+  --grid-line: rgba(255, 0, 127, 0.05);
+}
+
+/* Theme: Ethereal Pearl */
+[data-theme="ethereal"] {
+  --bg-primary: #0a0f1d;
+  --bg-secondary: #111a2e;
+  --bg-tertiary: #19253f;
+  --text-primary: #f0f6fc;
+  --text-secondary: #93c5fd;
+  --text-muted: #3b82f6;
+  --accent-primary: #38bdf8;
+  --accent-secondary: #818cf8;
+  --accent-glow: rgba(56, 189, 248, 0.45);
+  --accent-glow-secondary: rgba(129, 140, 248, 0.35);
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-glass-hover: rgba(56, 189, 248, 0.35);
+  --glass-bg: rgba(17, 26, 46, 0.7);
+  --cursor-dot: #38bdf8;
+  --cursor-ring: rgba(129, 140, 248, 0.7);
+  --particle-color: 56, 189, 248;
+  --particle-color-secondary: 129, 140, 248;
+  --grid-line: rgba(56, 189, 248, 0.04);
+}
+
+/* Theme: Matrix Protocol */
+[data-theme="matrix"] {
+  --bg-primary: #030804;
+  --bg-secondary: #08140a;
+  --bg-tertiary: #0c2010;
+  --text-primary: #ecfdf5;
+  --text-secondary: #6ee7b7;
+  --text-muted: #059669;
+  --accent-primary: #10b981;
+  --accent-secondary: #34d399;
+  --accent-glow: rgba(16, 185, 129, 0.5);
+  --accent-glow-secondary: rgba(52, 211, 153, 0.4);
+  --border-glass: rgba(16, 185, 129, 0.2);
+  --border-glass-hover: rgba(52, 211, 153, 0.4);
+  --glass-bg: rgba(8, 20, 10, 0.75);
+  --cursor-dot: #10b981;
+  --cursor-ring: rgba(52, 211, 153, 0.7);
+  --particle-color: 16, 185, 129;
+  --particle-color-secondary: 52, 211, 153;
+  --grid-line: rgba(16, 185, 129, 0.06);
+}
+
+/* Theme: Crimson Void */
+[data-theme="crimson"] {
+  --bg-primary: #0a0304;
+  --bg-secondary: #16080a;
+  --bg-tertiary: #220d10;
+  --text-primary: #fff1f2;
+  --text-secondary: #fda4af;
+  --text-muted: #e11d48;
+  --accent-primary: #ef4444;
+  --accent-secondary: #f97316;
+  --accent-glow: rgba(239, 68, 68, 0.5);
+  --accent-glow-secondary: rgba(249, 115, 22, 0.4);
+  --border-glass: rgba(239, 68, 68, 0.18);
+  --border-glass-hover: rgba(249, 115, 22, 0.35);
+  --glass-bg: rgba(22, 8, 10, 0.75);
+  --cursor-dot: #ef4444;
+  --cursor-ring: rgba(239, 68, 68, 0.7);
+  --particle-color: 148, 163, 184;
+  --particle-color-secondary: 239, 68, 68;
+  --grid-line: rgba(239, 68, 68, 0.05);
+}
+
+/* Theme: Royal Amethyst */
+[data-theme="amethyst"] {
+  --bg-primary: #090312;
+  --bg-secondary: #120822;
+  --bg-tertiary: #1c0e35;
+  --text-primary: #faf5ff;
+  --text-secondary: #d8b4fe;
+  --text-muted: #9333ea;
+  --accent-primary: #a855f7;
+  --accent-secondary: #ec4899;
+  --accent-glow: rgba(168, 85, 247, 0.5);
+  --accent-glow-secondary: rgba(236, 72, 153, 0.4);
+  --border-glass: rgba(168, 85, 247, 0.2);
+  --border-glass-hover: rgba(236, 72, 153, 0.35);
+  --glass-bg: rgba(18, 8, 34, 0.75);
+  --cursor-dot: #a855f7;
+  --cursor-ring: rgba(168, 85, 247, 0.7);
+  --particle-color: 148, 163, 184;
+  --particle-color-secondary: 168, 85, 247;
+  --grid-line: rgba(168, 85, 247, 0.05);
+}
+
+/* Theme: Solaris Flare */
+[data-theme="solaris"] {
+  --bg-primary: #0a0502;
+  --bg-secondary: #160c04;
+  --bg-tertiary: #241407;
+  --text-primary: #fffbeb;
+  --text-secondary: #fed7aa;
+  --text-muted: #ea580c;
+  --accent-primary: #f97316;
+  --accent-secondary: #eab308;
+  --accent-glow: rgba(249, 115, 22, 0.5);
+  --accent-glow-secondary: rgba(234, 179, 8, 0.4);
+  --border-glass: rgba(249, 115, 22, 0.2);
+  --border-glass-hover: rgba(234, 179, 8, 0.35);
+  --glass-bg: rgba(22, 12, 4, 0.75);
+  --cursor-dot: #f97316;
+  --cursor-ring: rgba(249, 115, 22, 0.7);
+  --particle-color: 148, 163, 184;
+  --particle-color-secondary: 249, 115, 22;
+  --grid-line: rgba(249, 115, 22, 0.05);
+}
+
+/* Theme: Nordic Glacier */
+[data-theme="nordic"] {
+  --bg-primary: #050b11;
+  --bg-secondary: #0b1520;
+  --bg-tertiary: #112030;
+  --text-primary: #f0fdfa;
+  --text-secondary: #99f6e4;
+  --text-muted: #0d9488;
+  --accent-primary: #2dd4bf;
+  --accent-secondary: #38bdf8;
+  --accent-glow: rgba(45, 212, 191, 0.5);
+  --accent-glow-secondary: rgba(56, 189, 248, 0.4);
+  --border-glass: rgba(45, 212, 191, 0.2);
+  --border-glass-hover: rgba(56, 189, 248, 0.35);
+  --glass-bg: rgba(11, 21, 32, 0.75);
+  --cursor-dot: #2dd4bf;
+  --cursor-ring: rgba(45, 212, 191, 0.7);
+  --particle-color: 148, 163, 184;
+  --particle-color-secondary: 45, 212, 191;
+  --grid-line: rgba(45, 212, 191, 0.05);
+}
